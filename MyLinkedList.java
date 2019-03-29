@@ -1,3 +1,4 @@
+@SuppressWarnings("unchecked")
 public class MyLinkedList<E>
 {
   public class Node
@@ -12,9 +13,6 @@ public class MyLinkedList<E>
       nPrevious = previous;
     }
 
-    public void clear(){
-      start = null;
-      end = null;}
     public E getData()
     {
       return data;
@@ -36,7 +34,7 @@ public class MyLinkedList<E>
     {
       previous = input;
     }
-    public void setData(int input)
+    public void setData(E input)
     {
       data  = input;
     }
@@ -54,6 +52,9 @@ public class MyLinkedList<E>
   {
     size = 0;
   }
+  public void clear(){
+    start = null;
+    end = null;}
   public int size()
   {
     return size;
@@ -192,7 +193,7 @@ public class MyLinkedList<E>
   return power;
 }
 
-  public Integer set(int index, E value)
+  public E set(int index, E value)
   {
     if(index > size || index < 0)
     {
@@ -232,4 +233,21 @@ public class MyLinkedList<E>
     other.size = 0;
     other.start = null;
     other.end = null;
-  }}
+  }
+  public static void main(String[] args)
+{
+  MyLinkedList test1 = new MyLinkedList();
+  MyLinkedList test2 = new MyLinkedList();
+  for(int i = 0; i < 10; i++)
+  {
+    test1.add(i);
+    test2.add(i);
+  }
+  System.out.println(test1);
+  test1.extend(test2);
+  System.out.println(test1);
+  test1.clear();
+  test2.clear();
+  System.out.println(test1);
+}
+}
