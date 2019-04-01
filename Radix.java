@@ -1,4 +1,6 @@
+import java.util.*;
 @SuppressWarnings("unchecked")
+public class Radix{
 public class MyLinkedList<E>
 {
   public class Node
@@ -236,21 +238,23 @@ public class MyLinkedList<E>
   }
 }
 
-public class Radix{
+
     public void radixsort(int[] data){
-      MyLinkedList<Integer>[] bucket = new MyLinkedList<Integer>[20];
+      ArrayList<MyLinkedList<Integer>> bucket = new ArrayList<MyLinkedList<Integer>>(20);
+      for(int i = 0; i < bucket.size(); i++){
+        bucket.set(i, new MyLinkedList<Integer>());}
       MyLinkedList<Integer> sorted = new MyLinkedList<Integer>();
       int n = 1;
-      
       for(int i = 0; i < data.length; i++){
-        if(data[i] > 0){
-          bucket[(data[i] % (10 * n) + 10].add(data[i]);}
+        if(data[i] >= 0){
+          bucket.get((data[i] % (10 * n)) + 10).add(data[i]);}
         else{
-          bucket[9 - (data[i] % (10 * n))].add(data[i]);}}
-      for(int j = 0; j < bucket.length; j++){
-        sorted.extend(bucket[j]);}
+          bucket.get(9 - (data[i] % (10 * n))).add(data[i]);}}
+      for(int j = 0; j < bucket.size(); j++){
+        sorted.extend(bucket.get(j));
+        bucket.get(j).clear();
+      }
       for(int j = 0; j < data.length; j++){
         data[j] = sorted.remove(0);}
-      bucket.clear();
     }
 }
