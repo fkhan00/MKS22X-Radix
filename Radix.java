@@ -239,22 +239,31 @@ public class MyLinkedList<E>
 }
 
 
-    public void radixsort(int[] data){
-      ArrayList<MyLinkedList<Integer>> bucket = new ArrayList<MyLinkedList<Integer>>(20);
-      for(int i = 0; i < bucket.size(); i++){
-        bucket.set(i, new MyLinkedList<Integer>());}
-      MyLinkedList<Integer> sorted = new MyLinkedList<Integer>();
-      int n = 1;
-      for(int i = 0; i < data.length; i++){
-        if(data[i] >= 0){
-          bucket.get((data[i] % (10 * n)) + 10).add(data[i]);}
-        else{
-          bucket.get(9 - (data[i] % (10 * n))).add(data[i]);}}
-      for(int j = 0; j < bucket.size(); j++){
-        sorted.extend(bucket.get(j));
-        bucket.get(j).clear();
-      }
-      for(int j = 0; j < data.length; j++){
-        data[j] = sorted.remove(0);}
-    }
+  public void radixsort(int[] data){
+    ArrayList<MyLinkedList<Integer>> bucket = new ArrayList<MyLinkedList<Integer>>();
+    // n pass
+    for(int i = 0; i < 20; i++){
+      bucket.add(new MyLinkedList<Integer>());}
+
+    MyLinkedList<Integer> sorted = new MyLinkedList<Integer>();
+    int n = 1;
+    // O(nlog(k))
+    while(true){
+      //n pass
+    for(int i = 0; i < data.length; i++){
+      if(data[i] >= 0){
+        bucket.get((data[i] % ((int) Math.pow(10, n) / (int)Math.pow(10, n - 1))) + 10).add(data[i]);}
+      else{
+        bucket.get(9 - (data[i] % ((int)Math.pow(10, n) /(int) Math.pow(10, n - 1)))).add(data[i]);}}
+    if(bucket.get(10).size == 20){
+      return;}
+    //constant time
+    for(int j = 0; j < 20; j++){
+      sorted.extend(bucket.get(j));
+      bucket.get(j).clear();}
+    // n pass
+    for(int j = 0; j < data.length; j++){
+      data[j] = sorted.remove(0);}
+    n ++;}
+}
 }
